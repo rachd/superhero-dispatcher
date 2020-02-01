@@ -1,14 +1,14 @@
 extends Node2D
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 export var damage = 100
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+signal do_damage(damage)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func do_damage():
+	emit_signal("do_damage", damage)
+
+func _on_DamageTimer_timeout():
+	do_damage()
+
+func pause(isPaused):
+	$DamageTimer.set_paused(isPaused)

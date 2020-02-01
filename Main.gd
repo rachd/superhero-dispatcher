@@ -8,4 +8,13 @@ func _ready():
 
 func new_game():
 	score = 0
-	$VillainTimer.start()
+#	$VillainTimer.start()
+
+
+
+func _on_Villain_do_damage(damage):
+	$HUD.update_damage(damage)
+
+
+func _on_HUD_pause_game(isPaused):
+	$Villain.pause(isPaused)

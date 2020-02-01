@@ -1,3 +1,30 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[ext_resource path="res://Hud.gd" type="Script" id=1]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="DamageLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 8.13916
+margin_top = 0.407822
+margin_right = 48.1392
+margin_bottom = 14.4078
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -48.4126
+margin_right = -10.4126
+margin_bottom = 20.0
+text = "Pause"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
