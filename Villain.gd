@@ -12,3 +12,6 @@ func _on_DamageTimer_timeout():
 
 func pause(isPaused):
 	$DamageTimer.set_paused(isPaused)
+
+func spawn():
+	$DamageTimer.start()
