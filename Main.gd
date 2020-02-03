@@ -1,20 +1,14 @@
 extends Node
 
 var score
+var tilemap
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
-func new_game():
-	score = 0
-#	$VillainTimer.start()
-
-
-
-func _on_Villain_do_damage(damage):
-	$HUD.update_damage(damage)
+	tilemap = get_node("/root/Main/TownTileMap")
+		
+func _on_Villain_do_damage(damage, cell_type_id):
+	$HUD.update_damage(damage, cell_type_id)
 
 
 func _on_HUD_pause_game(isPaused):
-	$Villain.pause(isPaused)
+	$VillainSpawner.pause(isPaused)
