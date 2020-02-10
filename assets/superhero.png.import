@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/kidnapper+thief+villain+icon-1320166693308723657_16.png-b670f5728600e7f84da997f905ec2392.stex"
+path="res://.import/superhero.png-9439fbbb8dbf3ac650564bd1efa064cb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/kidnapper+thief+villain+icon-1320166693308723657_16.png"
-dest_files=[ "res://.import/kidnapper+thief+villain+icon-1320166693308723657_16.png-b670f5728600e7f84da997f905ec2392.stex" ]
+source_file="res://assets/superhero.png"
+dest_files=[ "res://.import/superhero.png-9439fbbb8dbf3ac650564bd1efa064cb.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
