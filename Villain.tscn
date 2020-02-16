@@ -17,10 +17,6 @@ texture = ExtResource( 2 )
 
 [node name="DamageTimer" type="Timer" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 8, 8 )
-shape = SubResource( 1 )
-
 [node name="Label" type="Label" parent="."]
 margin_top = 16.0
 margin_right = 24.0
@@ -31,6 +27,7 @@ __meta__ = {
 }
 
 [node name="Area2D" type="Area2D" parent="."]
+monitoring = false
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]

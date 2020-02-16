@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Hero.gd" type="Script" id=1]
 [ext_resource path="res://assets/superhero.png" type="Texture" id=2]
 [ext_resource path="res://ClickHandler.gd" type="Script" id=3]
+[ext_resource path="res://HeroPanel.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -25,3 +26,13 @@ script = ExtResource( 3 )
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 8, 8 )
 shape = SubResource( 1 )
+
+[node name="HeroPanel" parent="." instance=ExtResource( 4 )]
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="Label" type="Label" parent="."]
+margin_top = 16.0
+margin_right = 40.0
+margin_bottom = 30.0
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]

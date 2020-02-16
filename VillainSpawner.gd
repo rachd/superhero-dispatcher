@@ -4,7 +4,7 @@ var tilemap
 
 const cell_size = 16
 
-export var max_villains = 50
+export var max_villains = 5
 var spawn_area : Rect2 = Rect2(0, 0, 256, 240)
 var villain_count = 0
 var villain_scene = preload("res://Villain.tscn")

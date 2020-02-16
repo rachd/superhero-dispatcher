@@ -23,3 +23,11 @@ func _on_Villain_clicked(villain):
 	if selected_hero:
 		selected_hero.move_to_Villain(villain)
 		selected_hero = null
+		
+func _on_Villain_dead(villain, hero):
+	hero.stop_attack()
+	villain.queue_free()
+
+func _on_Hero_dead(hero, villain):
+	villain.stop_attack()
+	hero.queue_free()
