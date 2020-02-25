@@ -31,3 +31,9 @@ func _on_Villain_dead(villain, hero):
 func _on_Hero_dead(hero, villain):
 	villain.stop_attack()
 	hero.queue_free()
+	
+func _calculate_new_path(start_position, target_position, hero):
+	var path = $TownTileMap.calculate_path(start_position, target_position)
+	if path:
+		path.remove(0)
+		hero.path = path

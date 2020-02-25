@@ -28,7 +28,7 @@ func test_position(position: Vector2):
 	var cell_coord = tilemap.world_to_map(position)
 	var cell_type_id = tilemap.get_cellv(cell_coord)
 	var isRoad = cell_type_id == tilemap.tile_set.find_tile_by_name("road")
-	return !isRoad
+	return isRoad
 	
 func _ready():
 	tilemap = get_node("/root/Main/TownTileMap")
