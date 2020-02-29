@@ -39,12 +39,11 @@ func on_click():
 	info_panel.visible = true
 
 func close_info_panel():
-	pass
-	#$HeroPanel.visible = false
+	$HeroPanel.visible = false
 	
 func on_attack_button_pressed():
-	close_info_panel()
 	emit_signal("hero_selected", self)
+	close_info_panel()
 	
 func _ready():
 	target_position = position
@@ -78,6 +77,9 @@ func die():
 
 func move_to_Villain(villain):
 	$AttackTimer.stop()
+	if target_villain:
+		target_villain.stop_attack()
+	stop_attack()
 	var relative_position = villain.position - position
 	target_villain = villain
 	if relative_position.length() <= 4:
