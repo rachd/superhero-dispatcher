@@ -27,6 +27,7 @@ func _on_Villain_clicked(villain):
 func _on_Villain_dead(villain, hero):
 	hero.stop_attack()
 	villain.queue_free()
+	$VillainSpawner.on_villain_died()
 
 func _on_Hero_dead(hero, villain):
 	villain.stop_attack()

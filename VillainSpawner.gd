@@ -38,10 +38,13 @@ func _on_Timer_timeout():
 	if villain_count < max_villains:
 		instance_villain()
 		villain_count += 1
-		$Timer.start(rng.randi_range(5, 10))
+	$Timer.start(rng.randi_range(5, 10))
 
 func pause(isPaused):
 	$Timer.set_paused(isPaused)
 	for spawned_villain in spawned_villains:
 			spawned_villain.pause(isPaused)
+			
+func on_villain_died():
+	villain_count -= 1
 	
