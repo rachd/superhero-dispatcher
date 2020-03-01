@@ -34,7 +34,11 @@ func _on_Hero_dead(hero, villain):
 	hero.queue_free()
 	
 func _calculate_new_path(start_position, target_position, hero):
-	var path = $TownTileMap.calculate_path(start_position, target_position)
-	if path:
-		path.remove(0)
+	var start_road = $TownTileMap.closest_road(start_position)
+	var end_road = $TownTileMap.closest_road(target_position)
+	var road_path = $TownTileMap.calculate_path(start_road, end_road)
+	hero.path = [start_road]
+	if road_path:
+		road_path.remove(0)
+		var path = [start_road] + road_path + [target_position]
 		hero.path = path

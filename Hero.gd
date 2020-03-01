@@ -101,6 +101,8 @@ func _process(delta):
 		var target = path[0]
 		var direction = (target - position).normalized()
 		position += direction * speed * delta
+		var current = position
+		var dist = position.distance_to(target)
 		if position.distance_to(target) < 1:
 			path.remove(0)
 			if path.size() == 0:
