@@ -61,7 +61,7 @@ func move_to_Villain(villain):
 	stop_attack()
 	var relative_position = villain.position - position
 	target_villain = villain
-	if relative_position.length() <= 4:
+	if relative_position.length() <= 8:
 		target_position = position
 	else:
 		target_position = villain.position

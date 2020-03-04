@@ -2,7 +2,7 @@ extends Node2D
 
 var tilemap
 
-const cell_size = 16
+const cell_size = 32
 
 export var max_villains = 5
 var spawn_area : Rect2 = Rect2(0, 0, 256, 240)
