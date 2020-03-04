@@ -1,5 +1,6 @@
 extends PanelContainer
 
+# public methods
 func set_name(name):
 	$MarginContainer/VBoxContainer/GridContainer/NameValue.text = name
 
@@ -15,6 +16,7 @@ func set_speed(speed):
 func get_size():
 	return rect_size
 	
+# private methods
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
 		var click_position = event.position

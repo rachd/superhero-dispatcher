@@ -8,6 +8,7 @@ var tiles = constants.getTiles()
 
 signal pause_game(isPaused)
 
+# public methods
 func update_damage(damage, cell_type_id):
 	match(cell_type_id):
 		tiles.office:
@@ -17,15 +18,15 @@ func update_damage(damage, cell_type_id):
 		tiles.park:
 			damage_done += damage
 	$DamageLabel.text = str(damage_done)
+
+# private methods
+func _on_StartButton_pressed():
+	_play_pause()
 	
-func play_pause():
+func _play_pause():
 	if isPaused:
 		$StartButton.text = "Pause"
 	else:
 		$StartButton.text = "Play"
 	emit_signal("pause_game", !isPaused)
 	isPaused = !isPaused
-
-
-func _on_StartButton_pressed():
-	play_pause()
