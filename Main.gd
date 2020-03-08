@@ -18,6 +18,11 @@ func _on_HUD_pause_game(isPaused):
 func _on_Hero_clicked(hero):
 	selected_hero = hero
 	
+func _on_Hospital_clicked(hospital):
+	if selected_hero:
+		selected_hero.move_to_Hospital(hospital)
+		selected_hero = null
+	
 func _on_Villain_clicked(villain):
 	if selected_hero:
 		selected_hero.move_to_Villain(villain)

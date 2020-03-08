@@ -8,6 +8,9 @@ var target_position: Vector2
 var target_villain = null
 var attack_in_progress = false
 var current_health = health
+var target_type = null
+var heal_in_progress = false
+var target_hospital = null
 
 var path
 
@@ -54,20 +57,43 @@ func take_damage(damage):
 	if (current_health <= 0):
 		_die()
 		
+func move_to_Hospital(hospital):
+	_on_move()
+	var relative_position = hospital.position - position
+	target_hospital = hospital
+	target_type = "hospital"
+	if relative_position.length() <= 8:
+		target_position = position
+	else:
+		target_position = hospital.position
+		emit_signal("find_path", position, target_position, self)
+		
 func move_to_Villain(villain):
-	$AttackTimer.stop()
-	if target_villain:
-		target_villain.stop_attack()
-	stop_attack()
+	_on_move()
 	var relative_position = villain.position - position
 	target_villain = villain
+	target_type = "villain"
 	if relative_position.length() <= 8:
 		target_position = position
 	else:
 		target_position = villain.position
 		emit_signal("find_path", position, target_position, self)
 		
+func heal(amount):
+	current_health += amount
+	if current_health > health:
+		current_health = health
+	$Label.text = str(current_health)
+		
 # private methods
+func _on_move():
+	$AttackTimer.stop()
+	if target_villain:
+		target_villain.stop_attack()
+	if target_hospital:
+		target_hospital.stop_heal()
+	stop_attack()
+	
 func _close_info_panel():
 	$HeroPanel.visible = false
 	
@@ -75,6 +101,9 @@ func _start_attack():
 	attack_in_progress = true
 	target_villain.start_attack(self)
 	$AttackTimer.start()
+	
+func _start_heal():
+	target_hospital.start_heal(self)
 	
 func _ready():
 	target_position = position
@@ -96,6 +125,13 @@ func _check_if_attack():
 		for overlap in overlaps:
 			if overlap.get_parent() == target_villain:
 				_start_attack()
+				
+func _check_if_heal():
+	if !heal_in_progress:
+		var overlaps = $Area2D.get_overlapping_areas()
+		for overlap in overlaps:
+			if overlap.get_parent() == target_hospital:
+				_start_heal()
 		
 func _process(delta):
 	if path:
@@ -108,5 +144,8 @@ func _process(delta):
 			path.remove(0)
 			if path.size() == 0:
 				path = null
-				_check_if_attack()
+				if target_type == "villain":
+					_check_if_attack()
+				elif target_type == "hospital":
+					_check_if_heal()
 			
