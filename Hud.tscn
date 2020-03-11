@@ -27,4 +27,14 @@ text = "Pause"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ClockIncrement" type="Timer" parent="."]
+autostart = true
+
+[node name="Clock" type="Label" parent="."]
+margin_left = 403.0
+margin_top = 3.0
+margin_right = 443.0
+margin_bottom = 17.0
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="timeout" from="ClockIncrement" to="." method="_on_ClockIncrement_timeout"]

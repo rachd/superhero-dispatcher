@@ -46,3 +46,7 @@ func _calculate_new_path(start_position, target_position, hero):
 		road_path.remove(0)
 		var path = [start_road] + road_path + [target_position]
 		hero.path = path
+
+
+func _on_HUD_end_of_day():
+	pass # Replace with function body.
