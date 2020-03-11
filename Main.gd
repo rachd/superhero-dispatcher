@@ -2,8 +2,13 @@ extends Node
 
 var score
 var tilemap
-
+var budget = 10000
+var money_spent = 0
 var selected_hero = null
+var summary_scene = preload("res://DaySummary.tscn")
+
+func updateDamage(damage):
+	money_spent = damage
 
 func _ready():
 	tilemap = get_node("/root/Main/TownTileMap")
@@ -47,6 +52,7 @@ func _calculate_new_path(start_position, target_position, hero):
 		var path = [start_road] + road_path + [target_position]
 		hero.path = path
 
-
 func _on_HUD_end_of_day():
-	pass # Replace with function body.
+	var summary = summary_scene.instance()
+	summary.set_values(budget, money_spent)	
+	add_child(summary)

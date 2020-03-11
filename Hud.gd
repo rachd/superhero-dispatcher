@@ -19,6 +19,7 @@ func update_damage(damage, cell_type_id):
 			damage_done += damage * 2
 		tiles.park:
 			damage_done += damage
+	get_parent().updateDamage(damage_done)
 	$DamageLabel.text = str(damage_done)
 
 # private methods
