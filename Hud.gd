@@ -22,17 +22,19 @@ func update_damage(damage, cell_type_id):
 	get_parent().updateDamage(damage_done)
 	$DamageLabel.text = str(damage_done)
 
+func pause(isPaused):
+	if isPaused:
+		$StartButton.text = "Play"
+		$ClockIncrement.stop()
+	else:
+		$StartButton.text = "Pause"
+		$ClockIncrement.start()
+		
 # private methods
 func _on_StartButton_pressed():
 	_play_pause()
 	
 func _play_pause():
-	if isPaused:
-		$StartButton.text = "Pause"
-		$ClockIncrement.start()
-	else:
-		$StartButton.text = "Play"
-		$ClockIncrement.stop()
 	emit_signal("pause_game", !isPaused)
 	isPaused = !isPaused
 

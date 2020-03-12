@@ -16,10 +16,11 @@ var rng = RandomNumberGenerator.new()
 func pause(isPaused):
 	$Timer.set_paused(isPaused)
 	for spawned_villain in spawned_villains:
-			spawned_villain.pause(isPaused)
+		spawned_villain.pause(isPaused)
 			
-func on_villain_died():
+func on_villain_died(villain):
 	villain_count -= 1
+	spawned_villains.erase(villain)
 	
 # private methods
 func _instance_villain():
