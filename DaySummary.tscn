@@ -36,3 +36,4 @@ margin_bottom = 68.0
 margin_top = 72.0
 margin_right = 219.0
 margin_bottom = 92.0
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]

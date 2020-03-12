@@ -1,8 +1,11 @@
 extends PanelContainer
 
+signal reset(budget)
+
 var budget = 0
 var amount_spent = 0
 var is_loss = false
+const constants = preload("constants.gd")
 
 func set_values(new_budget, new_spent):
 	budget = new_budget
@@ -20,3 +23,9 @@ func _ready():
 	else:
 		$VBoxContainer/LossLabel.text = ""
 		$VBoxContainer/Button.text = "Continue"
+
+func _on_Button_pressed():
+	if is_loss:
+		emit_signal("reset", constants.get_initial_budget())
+	else:
+		emit_signal("reset", constants.get_initial_budget() + (budget - amount_spent))
