@@ -19,7 +19,7 @@ signal hero_dead(hero, villain)
 signal find_path(start, end, target)
 
 # public methods
-func on_click():
+func on_right_click():
 	var info_panel = $HeroPanel
 #	var panel_size = info_panel.get_size()
 #	if position.x < panel_size.x:
@@ -36,7 +36,7 @@ func on_click():
 	info_panel.set_name("Superhero")
 	info_panel.visible = true
 	
-func on_attack_button_pressed():
+func on_click():
 	emit_signal("hero_selected", self)
 	_close_info_panel()
 	
@@ -79,11 +79,24 @@ func move_to_Villain(villain):
 		target_position = villain.position
 		emit_signal("find_path", position, target_position, self)
 		
+func move_to_point(target_position):
+	_on_move()
+	var relative_position = target_position - position
+	if relative_position.length() <= 8:
+		target_position = position
+	else:
+		emit_signal("find_path", position, target_position, self)
+		
 func heal(amount):
 	current_health += amount
 	if current_health > health:
 		current_health = health
 	$Label.text = str(current_health)
+	
+func start_attack(villain):
+	target_villain = villain
+	attack_in_progress = true
+	$AttackTimer.start()
 		
 # private methods
 func _on_move():
@@ -96,14 +109,6 @@ func _on_move():
 	
 func _close_info_panel():
 	$HeroPanel.visible = false
-	
-func _start_attack():
-	attack_in_progress = true
-	target_villain.start_attack(self)
-	$AttackTimer.start()
-	
-func _start_heal():
-	target_hospital.start_heal(self)
 	
 func _ready():
 	target_position = position
@@ -119,20 +124,6 @@ func _die():
 	$AttackTimer.stop()
 	emit_signal("hero_dead", self, target_villain)
 		
-func _check_if_attack():
-	if !attack_in_progress:
-		var overlaps = $Area2D.get_overlapping_areas()
-		for overlap in overlaps:
-			if overlap.get_parent() == target_villain:
-				_start_attack()
-				
-func _check_if_heal():
-	if !heal_in_progress:
-		var overlaps = $Area2D.get_overlapping_areas()
-		for overlap in overlaps:
-			if overlap.get_parent() == target_hospital:
-				_start_heal()
-		
 func _process(delta):
 	if path:
 		var target = path[0]
@@ -144,8 +135,7 @@ func _process(delta):
 			path.remove(0)
 			if path.size() == 0:
 				path = null
-				if target_type == "villain":
-					_check_if_attack()
-				elif target_type == "hospital":
-					_check_if_heal()
+				var overlaps = $Area2D.get_overlapping_areas()
+				for overlap in overlaps: 
+					overlap.start_hero_interaction(self)
 			

@@ -1,17 +1,64 @@
 extends TileMap
 
+signal map_clicked(position)
+
 onready var astar = AStar.new()
 onready var half_cell_size = cell_size / 2
 
 # The bounds of the rectangle containing all used tiles on this tilemap
 onready var used_rect = get_used_rect()
 
+## public functions
+func closest_road(start):
+	var start_tile = world_to_map(start)
+	var top_dist = 0
+	var left_dist = 0
+	var right_dist = 0
+	var bottom_dist = 0
+	while true:
+		if _is_road(start_tile + Vector2(0, -1 * top_dist)):
+			return map_to_world(start_tile + Vector2(0, -1 * top_dist))
+		elif _is_road(start_tile + Vector2(-1 * left_dist, 0)):
+			return map_to_world(start_tile + Vector2(-1 * left_dist, 0))
+		elif _is_road(start_tile + Vector2(0, 1 * bottom_dist)):
+			return map_to_world(start_tile + Vector2(0, 1 * bottom_dist))
+		elif _is_road(start_tile + Vector2(1 * right_dist, 0)):
+			return map_to_world(start_tile + Vector2(1 * right_dist, 0))
+		else:
+			top_dist += 1
+			bottom_dist += 1
+			left_dist += 1
+			right_dist += 1
 
-func _ready():
-	_add_traversable_tiles()
+func calculate_path(start, end):
+	# Convert positions to cell coordinates
+	var start_tile = world_to_map(start)
+	var end_tile = world_to_map(end)
+
+	# Determines IDs
+	var start_id = _get_id_for_point(start_tile)
+	var end_id = _get_id_for_point(end_tile)
+	
+	var has_start = astar.has_point(start_id)
+	var has_end = astar.has_point(end_id)
+
+	if not astar.has_point(start_id) or not astar.has_point(end_id):
+		return null
+
+	# Otherwise, find the map
+	var path_map = astar.get_point_path(start_id, end_id)
+
+	# Convert Vector3 array (remember, AStar is 3D) to real world points
+	var path_world = []
+	for point in path_map:
+		var point_world = map_to_world(Vector2(point.x, point.y))
+		path_world.append(point_world)
+	return path_world
 
 ## Private functions
-
+func _ready():
+	_add_traversable_tiles()
+	self.connect("map_clicked", get_node("/root/Main"), "_on_Map_clicked")
 
 func _add_traversable_tiles():
 	var all_tiles = get_used_cells()
@@ -49,53 +96,11 @@ func _get_id_for_point(point):
 	return x + y * used_rect.size.x
 				
 
-func calculate_path(start, end):
-	# Convert positions to cell coordinates
-	var start_tile = world_to_map(start)
-	var end_tile = world_to_map(end)
-
-	# Determines IDs
-	var start_id = _get_id_for_point(start_tile)
-	var end_id = _get_id_for_point(end_tile)
-	
-	var has_start = astar.has_point(start_id)
-	var has_end = astar.has_point(end_id)
-
-	if not astar.has_point(start_id) or not astar.has_point(end_id):
-		return null
-
-	# Otherwise, find the map
-	var path_map = astar.get_point_path(start_id, end_id)
-
-	# Convert Vector3 array (remember, AStar is 3D) to real world points
-	var path_world = []
-	for point in path_map:
-		var point_world = map_to_world(Vector2(point.x, point.y))
-		path_world.append(point_world)
-	return path_world
-
-func is_road(tile):
+func _is_road(tile):
 	var cell_type_id = get_cellv(tile)
 	return cell_type_id == tile_set.find_tile_by_name("road")
-
-func closest_road(start):
-	var start_tile = world_to_map(start)
-	var top_dist = 0
-	var left_dist = 0
-	var right_dist = 0
-	var bottom_dist = 0
-	while true:
-		if is_road(start_tile + Vector2(0, -1 * top_dist)):
-			return map_to_world(start_tile + Vector2(0, -1 * top_dist))
-		elif is_road(start_tile + Vector2(-1 * left_dist, 0)):
-			return map_to_world(start_tile + Vector2(-1 * left_dist, 0))
-		elif is_road(start_tile + Vector2(0, 1 * bottom_dist)):
-			return map_to_world(start_tile + Vector2(0, 1 * bottom_dist))
-		elif is_road(start_tile + Vector2(1 * right_dist, 0)):
-			return map_to_world(start_tile + Vector2(1 * right_dist, 0))
-		else:
-			top_dist += 1
-			bottom_dist += 1
-			left_dist += 1
-			right_dist += 1
 		
+func _unhandled_input(event):
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
+		var target_tile = world_to_map(event.position)
+		emit_signal("map_clicked", map_to_world(target_tile))

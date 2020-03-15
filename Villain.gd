@@ -20,18 +20,15 @@ func take_damage(damage):
 func pause(isPaused):
 	$DamageTimer.set_paused(isPaused)
 	
-func start_attack(hero):
+func start_hero_interaction(hero):
 	engaged_hero = hero
+	hero.start_attack(self)
 	
 func stop_attack():
 	engaged_hero = null
-	
-func on_click():
-	emit_signal("villain_selected", self)
 
 func spawn():
 	self.connect("do_damage", get_node("/root/Main"), "_on_Villain_do_damage")
-	self.connect("villain_selected", get_node("/root/Main"), "_on_Villain_clicked")
 	self.connect("villain_dead", get_node("/root/Main"), "_on_Villain_dead")
 	$DamageTimer.start()
 

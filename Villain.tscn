@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Villain.gd" type="Script" id=1]
 [ext_resource path="res://assets/kidnapper+thief+villain+icon-1320166693308723657_32.png" type="Texture" id=2]
-[ext_resource path="res://ClickHandler.gd" type="Script" id=3]
+[ext_resource path="res://overlap.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )

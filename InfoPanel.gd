@@ -17,9 +17,9 @@ func get_size():
 	return rect_size
 	
 # private methods
-func _input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
-		var click_position = event.position
+#func _input(event):
+#	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
+#		var click_position = event.position
 #		if not (click_position.x >= rect_position.x and click_position.x <= (rect_position.x + rect_size.x) and click_position.y >= rect_position.y and click_position.y <= (rect_position.y + rect_size.y)):
 #			get_parent().close_info_panel()
 
