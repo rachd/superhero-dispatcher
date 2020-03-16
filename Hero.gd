@@ -12,7 +12,11 @@ var target_type = null
 var heal_in_progress = false
 var target_hospital = null
 
+const constants = preload("constants.gd")
+var spawn_area = constants.get_spawn_area()
+var cell_size = constants.get_cell_size()
 var path
+var rng = RandomNumberGenerator.new()
 
 signal hero_selected(hero)
 signal hero_dead(hero, villain)
@@ -42,6 +46,12 @@ func pause(isPaused):
 		speed = 0
 	else:
 		speed = 25
+		
+func reset():
+	_on_move()
+	current_health = health
+	$Label.text = str(current_health)
+	_set_initial_position()
 		
 func take_damage(damage):
 	current_health -= damage
@@ -80,8 +90,15 @@ func _on_move():
 func _close_info_panel():
 	$HeroPanel.visible = false
 	
-func _ready():
+func _set_initial_position():
+	position.x = spawn_area.position.x + rng.randi_range(0, spawn_area.size.x / cell_size) * cell_size
+	position.y = spawn_area.position.y + rng.randi_range(0, spawn_area.size.y / cell_size) * cell_size
 	target_position = position
+	path = []
+	
+func _ready():
+	rng.randomize()
+	_set_initial_position()
 	$Label.text = str(current_health)
 	self.connect("hero_selected", get_node("/root/Main"), "_on_Hero_clicked")
 	self.connect("hero_dead", get_node("/root/Main"), "_on_Hero_dead")

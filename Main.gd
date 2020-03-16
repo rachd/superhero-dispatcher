@@ -2,14 +2,14 @@ extends Node
 
 var score
 var tilemap
-var budget = 1000
-var money_spent = 0
+var starting_budget = 4000
+var current_budget = 4000
 var selected_hero = null
 var summary_scene = preload("res://DaySummary.tscn")
 var is_paused = false
 
-func updateDamage(damage):
-	money_spent = damage
+func updateDamage(new_budget):
+	current_budget = new_budget
 	
 func pause(isPaused):
 	for child in get_children():
@@ -18,9 +18,18 @@ func pause(isPaused):
 	
 func _ready():
 	tilemap = get_node("/root/Main/TownTileMap")
+	$HUD.set_remaining_budget(starting_budget)
 		
 func _on_Villain_do_damage(damage, cell_type_id):
 	$HUD.update_damage(damage, cell_type_id)
+	
+func _on_Reset(new_budget):
+	starting_budget = new_budget
+	for child in get_children():
+		if child.has_method("reset"):
+			child.reset()
+	$HUD.set_remaining_budget(starting_budget)
+	pause(false)
 
 func _on_HUD_pause_game():
 	is_paused = !is_paused
@@ -56,7 +65,7 @@ func _calculate_new_path(start_position, target_position, hero):
 func _on_HUD_end_of_day():
 	pause(true)
 	var summary = summary_scene.instance()
-	summary.set_values(budget, money_spent)	
+	summary.set_values(starting_budget, current_budget)	
 	add_child(summary)
 	
 func _unhandled_input(event):

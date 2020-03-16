@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-var damage_done = 0
+var remaining_budget = 0
 var time = 900
 
 const constants = preload("constants.gd")
@@ -10,17 +10,24 @@ signal pause_game()
 signal end_of_day()
 
 # public methods
+func reset():
+	time = 900
+	
 func update_damage(damage, cell_type_id):
 	match(cell_type_id):
 		tiles.office:
-			damage_done += damage * 3
+			remaining_budget -= damage * 3
 		tiles.house:
-			damage_done += damage * 2
+			remaining_budget -= damage * 2
 		tiles.park:
-			damage_done += damage
-	get_parent().updateDamage(damage_done)
-	$DamageLabel.text = str(damage_done)
-
+			remaining_budget -= damage
+	get_parent().updateDamage(remaining_budget)
+	$DamageLabel.text = str(remaining_budget)
+	
+func set_remaining_budget(budget):
+	remaining_budget = budget
+	$DamageLabel.text = str(remaining_budget)
+	
 func pause(isPaused):
 	if isPaused:
 		$StartButton.text = "Play"
