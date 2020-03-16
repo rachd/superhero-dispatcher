@@ -1,13 +1,12 @@
 extends CanvasLayer
 
-var isPaused = false
 var damage_done = 0
 var time = 900
 
 const constants = preload("constants.gd")
 var tiles = constants.getTiles()
 
-signal pause_game(isPaused)
+signal pause_game()
 signal end_of_day()
 
 # public methods
@@ -35,8 +34,7 @@ func _on_StartButton_pressed():
 	_play_pause()
 	
 func _play_pause():
-	emit_signal("pause_game", !isPaused)
-	isPaused = !isPaused
+	emit_signal("pause_game")
 
 func _formatTime():
 	# convert to 12-hour time with am/pm

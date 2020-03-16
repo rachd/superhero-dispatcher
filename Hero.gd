@@ -21,15 +21,6 @@ signal find_path(start, end, target)
 # public methods
 func on_right_click():
 	var info_panel = $HeroPanel
-#	var panel_size = info_panel.get_size()
-#	if position.x < panel_size.x:
-#		info_panel.rect_position.x = 20
-#	else:
-#		info_panel.rect_position.x = position.x
-#	if position.y < panel_size.y:
-#		info_panel.rect_position.y = 20
-#	else:
-#		info_panel.rect_position.y = position.y
 	info_panel.set_speed(speed)
 	info_panel.set_health(health)
 	info_panel.set_attack(attack)
@@ -46,6 +37,7 @@ func stop_attack():
 	target_villain = null
 			
 func pause(isPaused):
+	$AttackTimer.set_paused(isPaused)
 	if isPaused:
 		speed = 0
 	else:
@@ -56,28 +48,6 @@ func take_damage(damage):
 	$Label.text = str(current_health)
 	if (current_health <= 0):
 		_die()
-		
-func move_to_Hospital(hospital):
-	_on_move()
-	var relative_position = hospital.position - position
-	target_hospital = hospital
-	target_type = "hospital"
-	if relative_position.length() <= 8:
-		target_position = position
-	else:
-		target_position = hospital.position
-		emit_signal("find_path", position, target_position, self)
-		
-func move_to_Villain(villain):
-	_on_move()
-	var relative_position = villain.position - position
-	target_villain = villain
-	target_type = "villain"
-	if relative_position.length() <= 8:
-		target_position = position
-	else:
-		target_position = villain.position
-		emit_signal("find_path", position, target_position, self)
 		
 func move_to_point(target_position):
 	_on_move()
@@ -134,6 +104,7 @@ func _process(delta):
 		if position.distance_to(target) < 1:
 			path.remove(0)
 			if path.size() == 0:
+				position = target
 				path = null
 				var overlaps = $Area2D.get_overlapping_areas()
 				for overlap in overlaps: 
