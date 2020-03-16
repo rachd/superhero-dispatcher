@@ -6,6 +6,7 @@ var budget = 1000
 var money_spent = 0
 var selected_hero = null
 var summary_scene = preload("res://DaySummary.tscn")
+var is_paused = false
 
 func updateDamage(damage):
 	money_spent = damage
@@ -21,8 +22,9 @@ func _ready():
 func _on_Villain_do_damage(damage, cell_type_id):
 	$HUD.update_damage(damage, cell_type_id)
 
-func _on_HUD_pause_game(isPaused):
-	pause(isPaused)
+func _on_HUD_pause_game():
+	is_paused = !is_paused
+	pause(is_paused)
 
 func _on_Hero_clicked(hero):
 	selected_hero = hero
@@ -56,3 +58,8 @@ func _on_HUD_end_of_day():
 	var summary = summary_scene.instance()
 	summary.set_values(budget, money_spent)	
 	add_child(summary)
+	
+func _unhandled_input(event):
+	if event is InputEventKey and event.scancode == 32 and event.pressed:
+		is_paused = !is_paused
+		pause(is_paused)
