@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Town.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Hud.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Hospital.tscn" type="PackedScene" id=4]
 [ext_resource path="res://VillainSpawner.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Hero.tscn" type="PackedScene" id=6]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -21,9 +20,5 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 3, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 
 position = Vector2( 128, 64 )
 
 [node name="VillainSpawner" parent="." instance=ExtResource( 5 )]
-
-[node name="Hero" parent="." instance=ExtResource( 6 )]
-
-[node name="Hero2" parent="." instance=ExtResource( 6 )]
 [connection signal="end_of_day" from="HUD" to="." method="_on_HUD_end_of_day"]
 [connection signal="pause_game" from="HUD" to="." method="_on_HUD_pause_game"]

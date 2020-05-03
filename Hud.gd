@@ -3,7 +3,6 @@ extends CanvasLayer
 var remaining_budget = 0
 var time = 900
 
-const constants = preload("constants.gd")
 var tiles = constants.getTiles()
 
 signal pause_game()

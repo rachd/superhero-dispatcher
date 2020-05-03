@@ -19,6 +19,11 @@ config/name="SuperheroDispatcher"
 run/main_scene="res://HeroPicker.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GameVariables="*res://GameVariables.gd"
+constants="*res://constants.gd"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

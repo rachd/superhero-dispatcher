@@ -6,7 +6,6 @@ export var max_villains = 5
 var villain_count = 0
 var villain_scene = preload("res://Villain.tscn")
 var spawned_villains = []
-const constants = preload("constants.gd")
 var spawn_area = constants.get_spawn_area()
 var cell_size = constants.get_cell_size()
 

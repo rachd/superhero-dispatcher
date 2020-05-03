@@ -30,7 +30,21 @@ scale = Vector2( 80, 80 )
 texture = SubResource( 1 )
 
 [node name="Name" type="Label" parent="VBoxContainer"]
-margin_top = 19.0
 margin_right = 40.0
-margin_bottom = 21.0
+margin_bottom = 2.0
 custom_fonts/font = SubResource( 2 )
+
+[node name="Health" type="Label" parent="VBoxContainer"]
+margin_top = 6.0
+margin_right = 40.0
+margin_bottom = 20.0
+
+[node name="Speed" type="Label" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 40.0
+margin_bottom = 38.0
+
+[node name="Attack" type="Label" parent="VBoxContainer"]
+margin_top = 42.0
+margin_right = 40.0
+margin_bottom = 56.0

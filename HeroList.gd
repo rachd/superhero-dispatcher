@@ -1,9 +1,8 @@
 extends ItemList
 
 func _ready():
-	self.add_item("Zeus")
-	self.add_item("Hermes")
-	self.add_item("Artemis")
-	self.add_item("Poseidon")
+	var heros = constants.get_hero_stats()
+	for hero in heros.keys():
+		self.add_item(hero)
 	
 	
