@@ -130,5 +130,6 @@ func _process(delta):
 				path = null
 				var overlaps = $Area2D.get_overlapping_areas()
 				for overlap in overlaps: 
-					overlap.start_hero_interaction(self)
+					if overlap.has_method("start_hero_interaction"):
+						overlap.start_hero_interaction(self)
 			
