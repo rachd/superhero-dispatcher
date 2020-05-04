@@ -2,6 +2,7 @@ extends Control
 
 var hero_count = 0
 var selected_heros = []
+var selected_hero_names = []
 
 func _on_HeroList_multi_selected(index, selected):
 	var selected_index = selected_heros.find(index)
@@ -26,9 +27,11 @@ func _set_selected_items():
 	var hero_3 = $MarginContainer/VBoxContainer/HBoxContainer/HeroList.get_item_text(selected_heros[2]) if selected_heros.size() > 2 else ""
 	$MarginContainer/VBoxContainer/HBoxContainer/HeroCard3.set_data(hero_3)
 	
+	selected_hero_names = [hero_1, hero_2, hero_3]
+	
 	if selected_heros.size() == 3:
 		$MarginContainer/VBoxContainer/StartButton.disabled = false
 
 func _on_StartButton_pressed():
-	GameVariables.selected_heros = selected_heros
+	GameVariables.selected_heros = selected_hero_names
 	get_tree().change_scene("res://Main.tscn")

@@ -6,6 +6,7 @@ var starting_budget = 4000
 var current_budget = 4000
 var selected_hero = null
 var summary_scene = preload("res://DaySummary.tscn")
+var hero_scene = preload("res://Hero.tscn")
 var is_paused = false
 
 func updateDamage(new_budget):
@@ -18,7 +19,19 @@ func pause(isPaused):
 	
 func _ready():
 	tilemap = get_node("/root/Main/TownTileMap")
+	var hero_data = constants.get_hero_stats()
+	for hero in GameVariables.selected_heros:
+		self._spawn_hero(hero, hero_data.get(hero))
 	$HUD.set_remaining_budget(starting_budget)
+	
+func _spawn_hero(hero_name, data):
+	var hero = hero_scene.instance()
+	hero.hero_name = hero_name
+	hero.speed = data.get("speed")
+	hero.health = data.get("health")
+	hero.attack = data.get("attack")
+	hero.spawn()
+	add_child(hero)
 		
 func _on_Villain_do_damage(damage, cell_type_id):
 	$HUD.update_damage(damage, cell_type_id)

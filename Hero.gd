@@ -1,9 +1,11 @@
 extends KinematicBody2D
 
-var speed = 25
-var attack = 50
-var health = 100
+var hero_name = ""
+var speed = 0
+var attack = 0
+var health = 0
 
+var current_speed = 0
 var target_position: Vector2
 var target_villain = null
 var attack_in_progress = false
@@ -12,7 +14,6 @@ var target_type = null
 var heal_in_progress = false
 var target_hospital = null
 
-const constants = preload("constants.gd")
 var spawn_area = constants.get_spawn_area()
 var cell_size = constants.get_cell_size()
 var path
@@ -23,12 +24,16 @@ signal hero_dead(hero, villain)
 signal find_path(start, end, target)
 
 # public methods
+func spawn():
+	current_health = health
+	current_speed = speed
+
 func on_right_click():
 	var info_panel = $HeroPanel
 	info_panel.set_speed(speed)
 	info_panel.set_health(health)
 	info_panel.set_attack(attack)
-	info_panel.set_name("Superhero")
+	info_panel.set_name(hero_name)
 	info_panel.visible = true
 	
 func on_click():
@@ -43,9 +48,9 @@ func stop_attack():
 func pause(isPaused):
 	$AttackTimer.set_paused(isPaused)
 	if isPaused:
-		speed = 0
+		current_speed = 0
 	else:
-		speed = 25
+		current_speed = speed
 		
 func reset():
 	_on_move()
@@ -115,7 +120,7 @@ func _process(delta):
 	if path:
 		var target = path[0]
 		var direction = (target - position).normalized()
-		position += direction * speed * delta
+		position += direction * current_speed * delta
 		var current = position
 		var dist = position.distance_to(target)
 		if position.distance_to(target) < 1:
