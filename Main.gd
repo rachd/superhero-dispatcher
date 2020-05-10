@@ -7,6 +7,7 @@ var current_budget = 4000
 var selected_hero = null
 var summary_scene = preload("res://DaySummary.tscn")
 var hero_scene = preload("res://Hero.tscn")
+var store_scene = preload("res://Store.tscn")
 var is_paused = false
 
 func updateDamage(new_budget):
@@ -37,7 +38,12 @@ func _on_Villain_do_damage(damage, cell_type_id):
 	$HUD.update_damage(damage, cell_type_id)
 	
 func _on_Reset(new_budget):
-	starting_budget = new_budget
+	var store = store_scene.instance()
+	store.set_budget(current_budget)	
+	add_child(store)
+	
+func _on_close_Store(remaining_budget):
+	starting_budget = remaining_budget
 	for child in get_children():
 		if child.has_method("reset"):
 			child.reset()

@@ -34,4 +34,5 @@ func _set_selected_items():
 
 func _on_StartButton_pressed():
 	GameVariables.selected_heros = selected_hero_names
+	GameVariables.day = 1
 	get_tree().change_scene("res://Main.tscn")

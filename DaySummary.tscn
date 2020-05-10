@@ -13,27 +13,32 @@ margin_top = 7.0
 margin_right = 226.0
 margin_bottom = 177.0
 
-[node name="BudgetLabel" type="Label" parent="VBoxContainer"]
+[node name="DayLabel" type="Label" parent="VBoxContainer"]
 margin_right = 219.0
 margin_bottom = 14.0
 
-[node name="AmountSpentLabel" type="Label" parent="VBoxContainer"]
+[node name="BudgetLabel" type="Label" parent="VBoxContainer"]
 margin_top = 18.0
 margin_right = 219.0
 margin_bottom = 32.0
 
-[node name="TotalLabel" type="Label" parent="VBoxContainer"]
+[node name="AmountSpentLabel" type="Label" parent="VBoxContainer"]
 margin_top = 36.0
 margin_right = 219.0
 margin_bottom = 50.0
 
-[node name="LossLabel" type="Label" parent="VBoxContainer"]
+[node name="TotalLabel" type="Label" parent="VBoxContainer"]
 margin_top = 54.0
 margin_right = 219.0
 margin_bottom = 68.0
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="LossLabel" type="Label" parent="VBoxContainer"]
 margin_top = 72.0
 margin_right = 219.0
-margin_bottom = 92.0
+margin_bottom = 86.0
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+margin_top = 90.0
+margin_right = 219.0
+margin_bottom = 110.0
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]

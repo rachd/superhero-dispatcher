@@ -22,6 +22,7 @@ func _ready():
 	$VBoxContainer/BudgetLabel.text = "$" + str(starting_budget)
 	$VBoxContainer/AmountSpentLabel.text = "$" + str(amount_spent)
 	$VBoxContainer/TotalLabel.text = "$" + str(starting_budget - amount_spent)
+	$VBoxContainer/DayLabel.text = "Day " + str(GameVariables.day) 
 	if is_loss:
 		$VBoxContainer/LossLabel.text = "You Lose"
 		$VBoxContainer/Button.text = "Play Again"
@@ -32,5 +33,7 @@ func _ready():
 func _on_Button_pressed():
 	if is_loss:
 		emit_signal("reset", constants.get_initial_budget())
+		GameVariables.day = 1
 	else:
 		emit_signal("reset", starting_budget - amount_spent + income)
+		GameVariables.day += 1
