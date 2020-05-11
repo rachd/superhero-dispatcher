@@ -1,5 +1,7 @@
 extends Control
 
+signal start_next_day(budget)
+
 var rng = RandomNumberGenerator.new()
 var item_card_scene = preload("res://ItemCard.tscn")
 
@@ -10,6 +12,9 @@ var MAX_ITEMS = 6
 
 func set_budget(b):
 	budget = b
+	
+func reset():
+	self.queue_free()
 
 func _select_items(num_to_select):
 	var all_items = constants.get_items()
@@ -32,12 +37,16 @@ func _add_item_cards():
 		add_child(item_card)
 		
 func _on_item_bought(item):
-	print(item)
+	if item.price <= budget:
+		GameVariables.unassigned_items.append(item)
+		budget -= item.price
+	
 	
 func _on_item_saved(item):
 	GameVariables.saved_items.append(item)
 	
 func _ready():
+	self.connect("start_next_day", get_node("/root/Main"), "_on_close_Store")
 	rng.randomize()
 	items = GameVariables.saved_items
 	GameVariables.saved_items = []
@@ -45,4 +54,4 @@ func _ready():
 	self._add_item_cards()
 
 func _on_Done_pressed():
-	pass
+	emit_signal("start_next_day", budget)
