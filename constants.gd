@@ -78,5 +78,41 @@ static func get_items():
 		"title": "test4",
 		"type": "foot",
 		"price": 1400
+	},
+	{
+		"id": 6,
+		"title": "test5",
+		"type": "foot",
+		"price": 1400
+	},
+	{
+		"id": 7,
+		"title": "test6",
+		"type": "foot",
+		"price": 1400
+	},
+	{
+		"id": 8,
+		"title": "test7",
+		"type": "foot",
+		"price": 1400
+	},
+	{
+		"id": 9,
+		"title": "test8",
+		"type": "foot",
+		"price": 1400
+	},
+	{
+		"id": 10,
+		"title": "test9",
+		"type": "foot",
+		"price": 1400
+	},
+	{
+		"id": 11,
+		"title": "test10",
+		"type": "foot",
+		"price": 1400
 	}
 	]

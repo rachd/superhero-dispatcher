@@ -18,16 +18,20 @@ func reset():
 
 func _select_items(num_to_select):
 	var all_items = constants.get_items()
-	var selected_item_indexes = []
-	while selected_item_indexes.size() < num_to_select:
-		print(all_items.size())
+	var selected_item_ids = []
+	for saved_item in GameVariables.saved_items:
+		selected_item_ids.append(saved_item.id)
+	var owned_item_ids = GameVariables.owned_item_ids
+	while selected_item_ids.size() < num_to_select:
 		var item_index = rng.randi_range(0, all_items.size()-1)
-		while selected_item_indexes.has(item_index):
+		var item_id = all_items[item_index].id
+		while selected_item_ids.has(item_id) || owned_item_ids.has(item_id):
 			item_index = rng.randi_range(0, all_items.size()-1)
-		selected_item_indexes.append(item_index)
-	for index in selected_item_indexes:
-		print(index)
-		items.append(all_items[index])
+			item_id = all_items[item_index].id
+		selected_item_ids.append(item_id)
+	for item in all_items:
+		if selected_item_ids.has(item.id):
+			items.append(item)
 
 func _add_item_cards():
 	for item in items:
@@ -39,6 +43,7 @@ func _add_item_cards():
 func _on_item_bought(item):
 	if item.price <= budget:
 		GameVariables.unassigned_items.append(item)
+		GameVariables.owned_item_ids.append(item.id)
 		budget -= item.price
 	
 	
